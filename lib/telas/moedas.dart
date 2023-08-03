@@ -12,7 +12,19 @@ class Moedas extends StatelessWidget {
         backgroundColor: Colors.blueGrey[700],
         centerTitle: true,
       ),
-      body: const Text('Moedas corpo'),
+      body: Center(
+        child: Column(
+          children: [
+            const Text('Moedas corpo'),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Voltar'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
