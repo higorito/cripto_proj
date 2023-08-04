@@ -1,4 +1,5 @@
 import 'package:cripto_proj/rotas/rotas.dart';
+import 'package:cripto_proj/telas/home_cripto.dart';
 
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
        // colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 107, 21, 255)),
         useMaterial3: true,
       ),
-      home: const Rotas(),
+      home: HomeCripto(),  //nao to passando a rota aqui pq vou mudara a logica de navegacao
     );
   }
 }

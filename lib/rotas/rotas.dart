@@ -18,7 +18,7 @@ class Rotas extends StatelessWidget {
       title: 'Começo',
       
       initialRoute: '/homeCripto',
-
+   //nao to usando aqui
       routes: {
         '/logar': (context) => const Logar(),
         '/moedas': (context) => const Moedas(),
