@@ -14,14 +14,17 @@ class DetalhesMoedas extends StatefulWidget {
 }
 
 class _DetalhesMoedasState extends State<DetalhesMoedas> {
-  @override
-  Widget build(BuildContext context) {
 
+      //nao faco ideia do pq eu tinha colocado ele dentro do build
     NumberFormat dolar = NumberFormat.currency(locale: 'en_US', name: 'US\$');
     final _formKey = GlobalKey<FormState>();
-    final _valor = TextEditingController();
+    final _valor = TextEditingController(); 
 
     double qtd = 0;
+
+
+  @override
+  Widget build(BuildContext context) {
 
     comprarCripto(){
       if(_formKey.currentState!.validate()){
@@ -89,7 +92,7 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
                 child: Center(
                   child: Text(
                     "$qtd ${widget.moeda.sigla} = ${dolar.format(qtd * widget.moeda.cotacao)}",
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                   ),
                 ),
               ),
@@ -102,10 +105,10 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
               child: Form(key: _formKey, 
               
                 child: TextFormField(
-                  //aaaaaaaaaaa tmb n autofocus: true,
+                  
                   controller: _valor,
                   style: const TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
-//O PROBLEMA NAO ESTA AQUI, PQ JA REMOVI O INPUTDECOR KEYBOARDTYPE E INPUTFORMATTERS E CONTINUA COM O MESMO ERRO
+
                   decoration: inputDecor("Valor em Dolar", Icons.monetization_on),
                   keyboardType: TextInputType.number,
 
