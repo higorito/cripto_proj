@@ -1,3 +1,4 @@
+import 'package:cripto_proj/_core/cores.dart';
 import 'package:flutter/material.dart';
 
 
@@ -8,10 +9,10 @@ InputDecoration inputDecor(String label, IconData icones){
       //hintText: Text(label, style: const TextStyle(color: Colors.red),).data.toString(),
       
       hintText: label,
-      fillColor: const Color(0xFF8e698b),
+      fillColor: Cores.roxoFundoGrad,
       filled: true,
       contentPadding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      prefixIcon: Icon(icones, color: const Color(0xFF579e48),),
+      prefixIcon: Icon(icones, color: Cores.verdeEscuro,),
       suffix: const Text("USD", style: TextStyle(fontSize: 16,color: Color.fromARGB(255, 5, 5, 5)),),
       
 

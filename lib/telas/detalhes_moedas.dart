@@ -1,3 +1,4 @@
+import 'package:cripto_proj/_core/cores.dart';
 import 'package:cripto_proj/componentes/input_custom.dart';
 import 'package:cripto_proj/modelos/moeda_model.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
       appBar: AppBar(
         title: Text(widget.moeda.nome),
         centerTitle: true,
-        backgroundColor: const Color(0xFF771d76),
+        backgroundColor: Cores.appBarBackAzul,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(22),),
         ),
@@ -52,14 +53,15 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
         
       ),
       body: Container(
-        margin: const EdgeInsets.fromLTRB(8, 16, 8, 0),
+        margin: const EdgeInsets.fromLTRB(8, 16, 8, 40),
         
         decoration: const BoxDecoration(
+          
           borderRadius: BorderRadius.vertical(top: Radius.circular(22),),
           gradient: LinearGradient(
             colors: [
-              Color(0xFF8c5a8b),
-              Color(0xFF360435),
+              Cores.roxoTopoGrad,
+              Cores.roxoFundoGrad,
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -135,8 +137,12 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
 
             Container(
               alignment: Alignment.bottomCenter,
-              margin: const EdgeInsets.fromLTRB(38, 12, 38, 32),
-              child: ElevatedButton(onPressed: () {
+              margin: const EdgeInsets.fromLTRB(128, 12, 128, 32),
+              child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Cores.roxoEscuro,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22),),
+              ),
+                onPressed: () {
                 comprarCripto();
               },
               child: const Row(

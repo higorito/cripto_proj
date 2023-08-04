@@ -1,9 +1,13 @@
-import 'package:cripto_proj/componentes/app_bar_custom.dart';
+
+import 'package:cripto_proj/_core/cores.dart';
 import 'package:cripto_proj/modelos/moeda_model.dart';
+import 'package:cripto_proj/repositorios/favoritas_repo.dart';
 import 'package:cripto_proj/telas/detalhes_moedas.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../repositorios/moeda_repositorio.dart';
+
+import 'package:provider/provider.dart';
 
 class HomeCripto extends StatefulWidget {
   const HomeCripto({super.key});
@@ -16,12 +20,14 @@ class _HomeCriptoState extends State<HomeCripto> {
 
   List<MoedaModel> selecionadas = [];
 
+  late FavoritasRepo favoritasRepoLate;
+
     appBarCustomizadaEscopoL(){
     if(selecionadas.isEmpty){
       return AppBar(
       title: const Text("Criptomoedas", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.white),),
       centerTitle: true,
-      backgroundColor: const Color(0xff3d0739),
+      backgroundColor: Cores.roxoEscuro,
       shape: const RoundedRectangleBorder( //borda do appbar
       borderRadius: BorderRadius.vertical(bottom: Radius.circular(32),),),
       elevation: 8,
@@ -30,7 +36,7 @@ class _HomeCriptoState extends State<HomeCripto> {
       return AppBar(
       title: Text("(${selecionadas.length}) selecionadas"),
       centerTitle: true,
-      backgroundColor: const Color(0xFF771d76),
+      backgroundColor: Cores.roxoAzulado,
       shape: const RoundedRectangleBorder( //borda do appbar
       borderRadius: BorderRadius.vertical(bottom: Radius.circular(48),),),
       
@@ -47,6 +53,17 @@ class _HomeCriptoState extends State<HomeCripto> {
             selecionadas.clear();
           });
         },),
+      
+      actions: [
+        IconButton(
+          padding: const EdgeInsets.only(right: 32),
+          icon: const Icon(Icons.star, color: Colors.amber, ),
+          onPressed: (){
+            favoritasRepoLate.salvarTudo(selecionadas);
+            setState(() {
+              selecionadas.clear();
+            });
+          },),],
       );
     }
 
@@ -60,17 +77,19 @@ class _HomeCriptoState extends State<HomeCripto> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
     final tabela = MoedaRepositorio.tabelaMoedas; 
     NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
     NumberFormat dolar = NumberFormat.currency(locale: 'en_US', name: 'US\$');
 
-    
+  @override
+  Widget build(BuildContext context) {
+    favoritasRepoLate = Provider.of<FavoritasRepo>(context);  //recuperando as favoritas
+    //favoritasRepoLate =  context.watch<FavoritasRepo>();  //esperar por mudanças ou read 
+
     return Scaffold(
       appBar: appBarCustomizadaEscopoL(),
 
-      backgroundColor:  Color(0xFF42213f),
+      backgroundColor:  Cores.fundo,
       //backgroundColor: Color(0xFFb58eb1),
       body: Container(
         margin: const EdgeInsets.only(top: 16, left: 8, right: 8),
@@ -91,14 +110,23 @@ class _HomeCriptoState extends State<HomeCripto> {
                 const CircleAvatar(child: Icon(Icons.check, color: Colors.black,), backgroundColor: Color(0xFF579e48),) :
                 SizedBox(width: 50,child: Image.asset(tabela[moeda].icone),),
               
+
+              title: (favoritasRepoLate.moedasFavoritas.contains(tabela[moeda]))?
+                Row(
+                  children: [
+                    Text(tabela[moeda].nome, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.amber),),
+                    const SizedBox(width: 4,),
+                    const Icon(Icons.star, color: Colors.amber, size: 14,)
+                  ],
+                ) :
+                Text(tabela[moeda].nome, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),),
               
-              title: Text(tabela[moeda].nome, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),),
               subtitle: Text(tabela[moeda].sigla, style: const TextStyle(fontSize: 14, color: Colors.white70),),
               trailing: Text(dolar.format(tabela[moeda].cotacao), style: const TextStyle(fontSize: 16, color: Colors.white),),
         
               //selected: true,
               selected: selecionadas.contains(tabela[moeda]), //se contem na lista de selecionadas, fica selecionado
-              selectedTileColor: const Color(0xFF579e48),
+              selectedTileColor: Cores.verdeEscuro,
               selectedColor: const Color(0xFF277e1c),
               onLongPress: () {
                 
@@ -126,10 +154,23 @@ class _HomeCriptoState extends State<HomeCripto> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: 
       (selecionadas.isNotEmpty) ?
-        FloatingActionButton.extended(
-          onPressed: (){}, label: const Text("Comprar"),
-          icon: const Icon(Icons.monetization_on),
-          backgroundColor: const Color(0xFF277e1c),)
+        Padding(
+          padding: const EdgeInsets.only(left: 40 ),
+          child: Row(
+            children: [
+              FloatingActionButton.extended(
+                onPressed: (){}, label: const Text("Comprar"),
+                icon: const Icon(Icons.monetization_on),
+                backgroundColor: const Color(0xFF277e1c),
+                ),
+              const SizedBox(width: 10,),
+              FloatingActionButton.extended(
+                onPressed: (){}, label: const Text("Vender"),
+                icon: const Icon(Icons.money_off),
+                backgroundColor: const Color(0xFFFA4430),),
+            ],
+          ),
+        )
         : null,
 
     );
