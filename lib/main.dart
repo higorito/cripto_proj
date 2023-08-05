@@ -10,7 +10,9 @@ void main() {
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => FavoritasRepo()),
-    ], child: const MaterialApp(home: TelaMainRota(),)   //lembrar de envolver o widget na material(documentacao do provider nao fala isso)
+    ], child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: TelaMainRota(),)   //lembrar de envolver o widget na material(documentacao do provider nao fala isso)
     ),
     
   );

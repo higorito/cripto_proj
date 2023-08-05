@@ -39,6 +39,7 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
     }
     
     return Scaffold(
+      
       //aaa tmb n  resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(widget.moeda.nome),
@@ -53,15 +54,17 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
         
       ),
       body: Container(
-        margin: const EdgeInsets.fromLTRB(8, 16, 8, 40),
+        height: 450,
+        margin: const EdgeInsets.fromLTRB(8, 22, 8, 22),
         
         decoration: const BoxDecoration(
           
-          borderRadius: BorderRadius.vertical(top: Radius.circular(22),),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(22), bottom: Radius.circular(22),),
           gradient: LinearGradient(
             colors: [
-              Cores.roxoTopoGrad,
               Cores.roxoFundoGrad,
+              Cores.roxoTopoGrad,
+              
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -70,7 +73,7 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.fromLTRB(24, 24, 24, 12),
           
               child: Row( mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -137,7 +140,7 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
 
             Container(
               alignment: Alignment.bottomCenter,
-              margin: const EdgeInsets.fromLTRB(128, 12, 128, 32),
+              margin: const EdgeInsets.fromLTRB(64, 12, 64, 32),
               child: ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Cores.roxoEscuro,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22),),
