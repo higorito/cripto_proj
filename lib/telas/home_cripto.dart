@@ -151,7 +151,7 @@ class _HomeCriptoState extends State<HomeCripto> {
                 SizedBox(width: 50,child: Image.asset(tabela[moeda].icone),),
               
 
-              title: (favoritasRepoLate.moedasFavoritas.contains(tabela[moeda]))?
+              title: (favoritasRepoLate.moedasFavoritas.any((favorito) => favorito.sigla == tabela[moeda].sigla))?
                 Row(
                   children: [
                     Text(tabela[moeda].nome, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.amber),),

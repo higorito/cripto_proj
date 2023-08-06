@@ -2,7 +2,7 @@ import 'package:cripto_proj/telas/configuracoes.dart';
 import 'package:cripto_proj/telas/home.dart';
 import 'package:flutter/material.dart';
 
-import '../telas/home2.dart';
+
 import '../telas/home_cripto.dart';
 import '../telas/logar.dart';
 import '../telas/moedas.dart';

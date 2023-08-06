@@ -92,7 +92,7 @@ class _MoedaCardState extends State<MoedaCard> {
                 ),
               ),
               PopupMenuButton(
-                icon: Icon(Icons.more_vert),
+                icon: const Icon(Icons.more_vert),
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     child: ListTile(

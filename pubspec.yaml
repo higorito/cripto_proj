@@ -50,6 +50,10 @@ dev_dependencies:
   provider: 
   shared_preferences: 
 
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
+  path_provider: ^2.0.2  #ajuda no caminho do banco de dados
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

@@ -1,13 +1,18 @@
 import 'package:cripto_proj/configuracoes/conf_app.dart';
 import 'package:cripto_proj/repositorios/favoritas_repo.dart';
-import 'package:cripto_proj/rotas/rotas.dart';
 import 'package:cripto_proj/rotas/tela_main_rota.dart';
-import 'package:cripto_proj/telas/home_cripto.dart';
+
 
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'configuracoes/hive_conf.dart';
+
+void main() async { //async pq to usando o await 
+  //inciando o bd
+  WidgetsFlutterBinding.ensureInitialized(); //garante que que vai ser inicializado antes de rodar o app
+  await HiveConf.iniciar();
+
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => FavoritasRepo()),

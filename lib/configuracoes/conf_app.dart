@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:hive/hive.dart';
+
 class ConfApp extends ChangeNotifier {   //pq vai criar um provider
-    late SharedPreferences _prefs;
+    //late SharedPreferences _prefs;
+    late Box box;  //formato do hive
     Map<String, String> localizacao = {
       'local': 'pt_BR',
       'tipoMoeda': 'BRL',
@@ -18,12 +21,13 @@ class ConfApp extends ChangeNotifier {   //pq vai criar um provider
     }
 
     Future<void> _carregarPrefs() async {
-      _prefs = await SharedPreferences.getInstance();
+      //_prefs = await SharedPreferences.getInstance();
+      box = await Hive.openBox('confAppBox'); //abre o box
     }
 
     _carregarLocalizacao() {
-      final local = _prefs.getString('local') ?? 'pt_BR';
-      final tpMoeda = _prefs.getString('tipoMoeda') ?? 'BRL';
+      final local = box.get('local') ?? 'pt_BR';
+      final tpMoeda = box.get('tipoMoeda') ?? 'BRL';
 
       localizacao = {
         'local': local,
@@ -33,8 +37,8 @@ class ConfApp extends ChangeNotifier {   //pq vai criar um provider
    
 
    setLocalizacao(String local, String tpMoeda) async {
-     _prefs.setString('local', local);
-     _prefs.setString('tipoMoeda', tpMoeda);
+     await box.put('local', local);
+     await box.put('tipoMoeda', tpMoeda);
      _carregarLocalizacao();
      notifyListeners();
    }
