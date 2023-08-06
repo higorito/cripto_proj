@@ -1,4 +1,3 @@
-import 'package:cripto_proj/telas/home.dart';
 import 'package:cripto_proj/telas/home2.dart';
 import 'package:cripto_proj/telas/logar.dart';
 import 'package:cripto_proj/telas/moedas.dart';

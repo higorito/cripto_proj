@@ -18,8 +18,9 @@ class _FavoritasState extends State<Favoritas> {
     return Scaffold(
       backgroundColor: Cores.fundo,
       appBar: AppBar(
-        title: const Text('Favoritas'),
+        title: const Text('Favoritas', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),),
         centerTitle: true,
+        elevation: 5,
         backgroundColor: Cores.appBarBackAzul,
       ),
       body: Container(

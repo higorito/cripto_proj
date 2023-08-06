@@ -1,3 +1,4 @@
+import 'package:cripto_proj/telas/configuracoes.dart';
 import 'package:cripto_proj/telas/favoritas.dart';
 import 'package:cripto_proj/telas/home_cripto.dart';
 import 'package:flutter/material.dart';
@@ -36,14 +37,18 @@ class _TelaMainRotaState extends State<TelaMainRota> {
         children: [
             HomeCripto(),
             Favoritas(),
+            Configs(),
         ],
         onPageChanged: setPgAtual,
       ),
       
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: pgAtual,
-        items: const [BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-         BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favoritas') ],
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favoritas'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Configurações')
+           ],
         
         selectedIconTheme: IconThemeData(color: Colors.purple[800]),
         unselectedIconTheme: IconThemeData(color: Colors.grey[600]),
