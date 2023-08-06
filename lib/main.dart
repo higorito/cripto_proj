@@ -1,4 +1,5 @@
 import 'package:cripto_proj/configuracoes/conf_app.dart';
+import 'package:cripto_proj/repositorios/conta_reapo.dart';
 import 'package:cripto_proj/repositorios/favoritas_repo.dart';
 import 'package:cripto_proj/rotas/tela_main_rota.dart';
 
@@ -15,6 +16,7 @@ void main() async { //async pq to usando o await
 
   runApp(
     MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => ContaRepositorio()),
       ChangeNotifierProvider(create: (context) => FavoritasRepo()),
       ChangeNotifierProvider(create: (context) => ConfApp()),
     ], child: const MaterialApp(

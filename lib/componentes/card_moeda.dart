@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../configuracoes/conf_app.dart';
+
 class MoedaCard extends StatefulWidget {
   MoedaModel moeda;
 
@@ -16,8 +18,7 @@ class MoedaCard extends StatefulWidget {
 }
 
 class _MoedaCardState extends State<MoedaCard> {
-  NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
-  NumberFormat dolar = NumberFormat.currency(locale: 'en_US', name: 'US\$');
+  
 
   static Map<String, Color> precoColor = <String, Color>{
     'up': Colors.teal,
@@ -35,6 +36,9 @@ class _MoedaCardState extends State<MoedaCard> {
 
   @override
   Widget build(BuildContext context) {
+    final loca = context.read<ConfApp>().localizacao; //in
+    NumberFormat formatador = NumberFormat.currency(locale: loca['local'] , name: loca['tipoMoeda']);
+
     return Card(
       color: Colors.grey[200],
       margin: const EdgeInsets.only(top: 12),
@@ -83,7 +87,7 @@ class _MoedaCardState extends State<MoedaCard> {
                   borderRadius: BorderRadius.circular(100),
                 ),
                 child: Text(
-                  real.format(widget.moeda.cotacao),
+                  formatador.format(widget.moeda.cotacao),
                   style: TextStyle(
                     fontSize: 16,
                     color: precoColor['down'],
@@ -96,7 +100,7 @@ class _MoedaCardState extends State<MoedaCard> {
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     child: ListTile(
-                      title: Text('Remover das Favoritas'),
+                      title: const Text('Remover das Favoritas'),
                       onTap: () {
                         Navigator.pop(context);
                         Provider.of<FavoritasRepo>(context, listen: false).remover(widget.moeda);
