@@ -1,9 +1,12 @@
 import 'package:cripto_proj/_core/cores.dart';
 import 'package:cripto_proj/componentes/input_custom.dart';
+import 'package:cripto_proj/configuracoes/conf_app.dart';
 import 'package:cripto_proj/modelos/moeda_model.dart';
+import 'package:cripto_proj/repositorios/conta_reapo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class DetalhesMoedas extends StatefulWidget {
   MoedaModel moeda;
@@ -17,19 +20,24 @@ class DetalhesMoedas extends StatefulWidget {
 class _DetalhesMoedasState extends State<DetalhesMoedas> {
 
       //nao faco ideia do pq eu tinha colocado ele dentro do build
-    NumberFormat dolar = NumberFormat.currency(locale: 'en_US', name: 'US\$');
+    //NumberFormat dolar = NumberFormat.currency(locale: 'en_US', name: 'US\$');
     final _formKey = GlobalKey<FormState>();
     final _valor = TextEditingController(); 
 
     double qtd = 0;
 
+    late NumberFormat formatador; 
 
-  @override
-  Widget build(BuildContext context) {
+    String sufix = "R\$";
 
-    comprarCripto(){
+    late ContaRepositorio conta;
+
+  comprarCripto() async{
       if(_formKey.currentState!.validate()){
         //salvar a compra
+
+        await conta.comprar(widget.moeda, double.parse(_valor.text));
+
         Navigator.pop(context);
 
         ScaffoldMessenger.of(context).showSnackBar(
@@ -37,7 +45,15 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
         );
       }
     }
+
+  @override
+  Widget build(BuildContext context) {
+    final loca = context.read<ConfApp>().localizacao;
+    formatador = NumberFormat.currency(locale: loca["local"], name: loca["tipoMoeda"]);
+    sufix = loca["tipoMoeda"]!;
     
+    conta = Provider.of<ContaRepositorio>(context, listen: false);
+
     return Scaffold(
       
       //aaa tmb n  resizeToAvoidBottomInset: false,
@@ -80,7 +96,7 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
                 children: [
                   Image.asset(widget.moeda.icone, width: 64, height: 64,),
                   const SizedBox(width: 8,),
-                  Text(dolar.format(widget.moeda.cotacao), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),),
+                  Text(formatador.format(widget.moeda.cotacao), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),),
                 ],
               ),
             ),
@@ -96,7 +112,7 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
                 ),
                 child: Center(
                   child: Text(
-                    "$qtd ${widget.moeda.sigla} = ${dolar.format(qtd * widget.moeda.cotacao)}",
+                    "$qtd ${widget.moeda.sigla} = ${formatador.format(qtd * widget.moeda.cotacao)}",
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                   ),
                 ),
@@ -114,7 +130,7 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
                   controller: _valor,
                   style: const TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
 
-                  decoration: inputDecor("Valor em Dolar", Icons.monetization_on),
+                  decoration: inputDecor("Valor em ${loca['tipoMoeda']}", Icons.monetization_on, sufix ),
                   keyboardType: TextInputType.number,
 
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly ],  //permite customizar o filtering... ate colocar expressao regular
@@ -124,8 +140,11 @@ class _DetalhesMoedasState extends State<DetalhesMoedas> {
                     if(value!.isEmpty){
                       return "Informe um valor";
                     }else if(double.parse(value) < 20){
-                      return "Informe um valor maior que 20USD";
+                      return "Informe um valor maior que 20${loca['tipoMoeda']}}";
+                    }else if(double.parse(value) > conta.saldo){
+                      return "Saldo insuficiente";
                     }
+                    
                     return null;
                   },
                   

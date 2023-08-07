@@ -55,7 +55,7 @@ class DbSqlAuxiliador {   //legal ser no formato singleton para uma instancia
         data_operacao INT,
         sigla TEXT,
         tipo_operacao TEXT,
-        quantidade REAL,
+        quantidade TEXT,
         valor REAL
 
       );

@@ -1,3 +1,4 @@
+import 'package:cripto_proj/telas/carteira.dart';
 import 'package:cripto_proj/telas/configuracoes.dart';
 import 'package:cripto_proj/telas/favoritas.dart';
 import 'package:cripto_proj/telas/home_cripto.dart';
@@ -37,6 +38,7 @@ class _TelaMainRotaState extends State<TelaMainRota> {
         children: [
             HomeCripto(),
             Favoritas(),
+            Carteira(),
             Configs(),
         ],
         onPageChanged: setPgAtual,
@@ -44,9 +46,11 @@ class _TelaMainRotaState extends State<TelaMainRota> {
       
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: pgAtual,
+        type: BottomNavigationBarType.fixed, //para nao poder rolar o bottom navigation bar
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favoritas'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_balance_wallet), label: 'Carteira'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Configurações')
            ],
         

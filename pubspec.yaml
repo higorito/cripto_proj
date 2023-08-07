@@ -43,6 +43,8 @@ dependencies:
   hive: ^2.0.4
   hive_flutter: ^1.1.0
   path_provider: ^2.0.2  #ajuda no caminho do banco de dados
+  
+  fl_chart: ^0.36.2 #grafico
 
 dev_dependencies:
   flutter_test:
